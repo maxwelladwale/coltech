@@ -19,6 +19,8 @@ import {
   MockInstallationService,
 } from './implementations/mock/MockServices';
 
+import { MockPaymentService, IPaymentService } from './implementations/mock/MockPaymentService';
+
 type BackendType = 'mock' | 'odoo';
 
 class ServiceFactoryImpl implements IServiceFactory {
@@ -59,6 +61,7 @@ class ServiceFactoryImpl implements IServiceFactory {
   }
 
   public getOrderService(): IOrderService {
+    console.log("ORDER SERVICE", this.backend);
     switch (this.backend) {
       case 'odoo':
         throw new Error('Odoo backend not yet implemented');

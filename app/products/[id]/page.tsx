@@ -3,7 +3,6 @@
 import { notFound } from "next/navigation";
 import { ServiceFactory } from "@/lib/api/serviceFactory";
 import AddToCartButton from "@/components/products/AddToCartButton";
-import { IProduct } from "@/lib/api/interfaces/types";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
@@ -18,11 +17,12 @@ export async function generateStaticParams() {
 }
 
 // Page metadata
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const productService = ServiceFactory.getProductService();
   
   try {
-    const product = await productService.getProductById(params.id);
+    const product = await productService.getProductById(id);
     
     return {
       title: `${product.name} - COLTECH`,
@@ -39,13 +39,16 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function ProductDetailPage({ 
   params 
 }: { 
-  params: { id: string } 
+  params: Promise<{ id: string }>
 }) {
+  // Await params in Next.js 15+
+  const { id } = await params;
+  
   const productService = ServiceFactory.getProductService();
   
-  let product: IProduct;
+  let product;
   try {
-    product = await productService.getProductById(params.id);
+    product = await productService.getProductById(id);
   } catch {
     notFound(); // This triggers the not-found.tsx file
   }
