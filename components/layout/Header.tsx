@@ -36,7 +36,9 @@ export default function Header() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              
+              <Link href="/about-us" className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-background-dark">
+                  About Us
+              </Link>
               {/* Dropdown */}
               <div className="absolute left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white dark:bg-card-dark border border-border-light dark:border-border-dark rounded-lg shadow-lg py-2">
                 <Link href="/products#mdvrs" className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-background-dark">
@@ -50,7 +52,7 @@ export default function Header() {
                 </Link>
               </div>
             </div>
-
+            
             <Link href="/solutions" className="text-sm font-medium hover:text-primary transition-colors">
               Solutions
             </Link>
