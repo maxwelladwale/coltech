@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import VerificationFlow from '@/components/verification/VerificationFlow';
 
 export const metadata: Metadata = {
   title: 'COLTECH - Advanced Security Solutions',
@@ -103,6 +104,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Verification Flow */}
+      <VerificationFlow />
 
       {/* Services Section */}
       <section className="py-16 sm:py-24 bg-background-light dark:bg-background-dark/50">
