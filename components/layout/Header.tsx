@@ -1,7 +1,9 @@
-"use client"; // Only if you need interactivity (dropdowns, mobile menu)
+// components/layout/Header.tsx - UPDATED WITH CART
+"use client";
 
 import Link from "next/link";
 import { useState } from "react";
+import CartDrawer from "@/components/cart/CartDrawer";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -57,11 +59,15 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* CTA Button */}
-          <div className="flex items-center gap-4">
+          {/* Right Side Actions */}
+          <div className="flex items-center gap-2">
+            {/* Cart Drawer */}
+            <CartDrawer />
+
+            {/* Contact Button */}
             <Link
               href="/contact"
-              className="bg-primary text-white text-sm font-bold h-10 px-4 rounded-lg hover:bg-primary/90 transition-colors flex items-center"
+              className="hidden sm:flex bg-primary text-white text-sm font-bold h-10 px-4 rounded-lg hover:bg-primary/90 transition-colors items-center"
             >
               Contact Us
             </Link>
@@ -86,14 +92,33 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border-light dark:border-border-dark">
             <div className="flex flex-col gap-4">
-              <Link href="/products" className="text-sm font-medium hover:text-primary">
+              <Link 
+                href="/products" 
+                className="text-sm font-medium hover:text-primary"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Products
               </Link>
-              <Link href="/solutions" className="text-sm font-medium hover:text-primary">
+              <Link 
+                href="/solutions" 
+                className="text-sm font-medium hover:text-primary"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Solutions
               </Link>
-              <Link href="/about" className="text-sm font-medium hover:text-primary">
+              <Link 
+                href="/about" 
+                className="text-sm font-medium hover:text-primary"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Company
+              </Link>
+              <Link 
+                href="/contact" 
+                className="text-sm font-medium hover:text-primary"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Contact Us
               </Link>
             </div>
           </div>

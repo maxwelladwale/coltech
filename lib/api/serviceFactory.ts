@@ -1,3 +1,5 @@
+// lib/api/serviceFactory.ts - FIXED VERSION
+
 import type {
   IProductService,
   ICartService,
@@ -12,8 +14,8 @@ import {
   MockProductService,
   MockCartService,
   MockOrderService,
-  // MockLicenseService,
-  // MockCertificateService,
+  MockLicenseService,
+  MockCertificateService,
   MockInstallationService,
 } from './implementations/mock/MockServices';
 
@@ -36,33 +38,78 @@ class ServiceFactoryImpl implements IServiceFactory {
   }
 
   public getProductService(): IProductService {
-    return new MockProductService();
+    switch (this.backend) {
+      case 'odoo':
+        // return new OdooProductService(); // When you implement Odoo
+        throw new Error('Odoo backend not yet implemented');
+      case 'mock':
+      default:
+        return new MockProductService();
+    }
   }
 
   public getCartService(): ICartService {
-    return new MockCartService();
+    switch (this.backend) {
+      case 'odoo':
+        throw new Error('Odoo backend not yet implemented');
+      case 'mock':
+      default:
+        return new MockCartService();
+    }
   }
 
   public getOrderService(): IOrderService {
-    return new MockOrderService();
+    switch (this.backend) {
+      case 'odoo':
+        throw new Error('Odoo backend not yet implemented');
+      case 'mock':
+      default:
+        return new MockOrderService();
+    }
   }
 
   public getLicenseService(): ILicenseService {
-    return new MockLicenseService();
+    switch (this.backend) {
+      case 'odoo':
+        throw new Error('Odoo backend not yet implemented');
+      case 'mock':
+      default:
+        return new MockLicenseService();
+    }
   }
 
-  // public getCertificateService(): ICertificateService {
-  //   return new MockCertificateService();
-  // }
+  public getCertificateService(): ICertificateService {
+    switch (this.backend) {
+      case 'odoo':
+        throw new Error('Odoo backend not yet implemented');
+      case 'mock':
+      default:
+        return new MockCertificateService();
+    }
+  }
 
   public getInstallationService(): IInstallationService {
-    return new MockInstallationService();
+    switch (this.backend) {
+      case 'odoo':
+        throw new Error('Odoo backend not yet implemented');
+      case 'mock':
+      default:
+        return new MockInstallationService();
+    }
   }
 
-  // Add other services as needed
-  public getAuthService(): any { throw new Error('Not implemented'); }
-  public getBlogService(): any { throw new Error('Not implemented'); }
-  public getNotificationService(): any { throw new Error('Not implemented'); }
+  // Placeholder services (not yet implemented)
+  public getAuthService(): any { 
+    throw new Error('AuthService not yet implemented'); 
+  }
+  
+  public getBlogService(): any { 
+    throw new Error('BlogService not yet implemented'); 
+  }
+  
+  public getNotificationService(): any { 
+    throw new Error('NotificationService not yet implemented'); 
+  }
 }
 
 export const ServiceFactory = ServiceFactoryImpl.getInstance();
