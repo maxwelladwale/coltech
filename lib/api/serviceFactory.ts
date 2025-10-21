@@ -14,7 +14,7 @@ import {
   MockOrderService,
   // MockLicenseService,
   // MockCertificateService,
-  // MockInstallationService,
+  MockInstallationService,
 } from './implementations/mock/MockServices';
 
 type BackendType = 'mock' | 'odoo';
@@ -47,17 +47,17 @@ class ServiceFactoryImpl implements IServiceFactory {
     return new MockOrderService();
   }
 
-  // public getLicenseService(): ILicenseService {
-  //   return new MockLicenseService();
-  // }
+  public getLicenseService(): ILicenseService {
+    return new MockLicenseService();
+  }
 
   // public getCertificateService(): ICertificateService {
   //   return new MockCertificateService();
   // }
 
-  // public getInstallationService(): IInstallationService {
-  //   return new MockInstallationService();
-  // }
+  public getInstallationService(): IInstallationService {
+    return new MockInstallationService();
+  }
 
   // Add other services as needed
   public getAuthService(): any { throw new Error('Not implemented'); }

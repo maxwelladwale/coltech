@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { CartProvider } from "@/context/CartContext";
 
 // Use Inter font (better for your design)
 const inter = Inter({
@@ -23,6 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <CartProvider>
+
     <html lang="en" className={inter.className}>
       <body className="antialiased">
         <div className="flex flex-col min-h-screen">
@@ -34,5 +37,6 @@ export default function RootLayout({
         </div>
       </body>
     </html>
+    </CartProvider>
   );
 }

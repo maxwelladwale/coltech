@@ -1,5 +1,5 @@
 // lib/api/implementations/mock/MockProductService.ts
-import { IProductService, IProduct, IMDVRProduct, IPackage, ICartService, ICart, ICartItem, IOrderService, IOrder, OrderStatus, IShippingAddress, IInstallationDetails, ICustomPackage, IInvoice, ICamera } from '../../interfaces/types';
+import { IProductService, IProduct, IMDVRProduct, IPackage, ICartService, ICart, ICartItem, IOrderService, IOrder, OrderStatus, IShippingAddress, IInstallationDetails, ICustomPackage, IInvoice, ICamera, IPartnerGarage, IInstallationService } from '../../interfaces/types';
 
 export class MockProductService implements IProductService {
   async getProducts(): Promise<IProduct[]> {
@@ -447,3 +447,67 @@ export class MockOrderService implements IOrderService {
     };
   }
 }
+
+export class MockInstallationService implements IInstallationService {
+  async getPartnerGarages(filters?: { county?: string }): Promise<IPartnerGarage[]> {
+    return [
+      {
+        id: '1',
+        name: 'Garage 1',
+        location: '123 Main St',
+        county: 'Anytown',
+        phone: '1234567890',
+        email: 'garage1@example.com',
+        rating: 4.5,
+        availableSlots: new Date()
+      },
+      {
+        id: '2',
+        name: 'Garage 2',
+        location: '456 Elm St',
+        county: 'Anytown',
+        phone: '1234567890',
+        email: 'garage2@example.com',
+        rating: 4.5,
+        availableSlots: new Date(),
+      }
+    ];
+  }
+  async getGarageById(garageId: string): Promise<IPartnerGarage> {
+    return {
+      id: '1',
+      name: 'Garage 1',
+      location: '123 Main St',
+      county: 'Anytown',
+      phone: '1234567890',
+      email: 'garage1@example.com',
+      rating: 4.5,
+      availableSlots: new Date(),
+    };
+  }
+  async getAvailableSlots(garageId: string, date: Date): Promise<Date[]> {
+    return [
+      new Date(),
+      new Date(),
+      new Date(),
+      new Date()
+    ];
+  }
+  async scheduleAppointment(data: {
+    orderId: string;
+    garageId: string;
+    appointmentDate: Date;
+    appointmentTime: string;
+    vehicleDetails: {
+      registration: string;
+      make: string;
+      model: string;
+    };
+  }): Promise<{ appointmentId: string; confirmed: boolean }> {
+    return {
+      appointmentId: '1',
+      confirmed: true
+    };
+  }
+}
+
