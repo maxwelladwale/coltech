@@ -9,8 +9,9 @@ export const metadata: Metadata = {
 
 export default function SolutionsPage() {
   return (
-    <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+
         {/* Hero Section */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
@@ -103,6 +104,6 @@ export default function SolutionsPage() {
           </section>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

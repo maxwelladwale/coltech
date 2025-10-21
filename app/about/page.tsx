@@ -62,8 +62,8 @@ const StarIcon = ({ filled = true }: { filled?: boolean }) => (
 
 export default function AboutPage() {
   return (
-    <main className="flex-1">
-      <div className="mx-auto max-w-5xl py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
@@ -163,6 +163,6 @@ export default function AboutPage() {
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }
