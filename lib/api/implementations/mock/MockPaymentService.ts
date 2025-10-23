@@ -56,7 +56,14 @@ export interface IPaymentService {
 }
 
 export class MockPaymentService implements IPaymentService {
-  private payments: Map<string, any> = new Map();
+  private payments: Map<string, {
+    transactionId?: string;
+    referenceNumber?: string;
+    method: string;
+    status: 'pending' | 'completed' | 'failed';
+    amount: number;
+    paidAt?: Date;
+  }> = new Map();
 
   async initiateMpesaPayment(data: {
     orderId: string;

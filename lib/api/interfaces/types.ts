@@ -22,7 +22,7 @@ export interface IProduct {
   price: number;
   imageUrl?: string;
   videoUrl?: string;
-  specifications?: Record<string, any>;
+  specifications?: Record<string, string | number | boolean>;
   inStock: boolean;
   stockQuantity?: number;
 }
@@ -76,7 +76,7 @@ export interface ICustomPackage {
 export interface ICartItem {
   productId: string;
   quantity: number;
-  customizations?: Record<string, any>;
+  customizations?: Record<string, string | number | boolean>;
 }
 
 export interface ICart {
@@ -179,7 +179,7 @@ export interface ICertificate {
   issuedTo: string;
   issuedDate: Date;
   expiryDate?: Date;
-  details: Record<string, any>;
+  details: Record<string, string | number | boolean>;
 }
 
 export interface IVerificationRequest {
@@ -347,7 +347,7 @@ export interface ICertificateService {
   generateCertificate(data: {
     type: 'installation' | 'license' | 'product';
     orderId: string;
-    details: Record<string, any>;
+    details: Record<string, string | number | boolean>;
   }): Promise<ICertificate>;
 }
 
