@@ -324,8 +324,8 @@ export class MockCartService implements ICartService {
     updatedAt: new Date()
   };
 
-  async getCart(userId?: string): Promise<ICart> {
-    return { ...this.cart, userId };
+  async getCart(_userId?: string): Promise<ICart> {
+    return { ...this.cart, userId:_userId };
   }
   
   async addToCart(userId: string | undefined, item: ICartItem): Promise<ICart> {
@@ -523,7 +523,7 @@ export class MockInstallationService implements IInstallationService {
     return slots;
   }
 
-  async scheduleAppointment(data: {
+  async scheduleAppointment(_data: {
     orderId: string;
     garageId: string;
     appointmentDate: Date;
@@ -550,7 +550,7 @@ export class MockLicenseService implements ILicenseService {
     return license;
   }
 
-  async getLicensesByUser(userId: string): Promise<ILicense[]> {
+  async getLicensesByUser(_userId: string): Promise<ILicense[]> {
     return []; // Mock empty for now
   }
 
@@ -617,7 +617,7 @@ export class MockCertificateService implements ICertificateService {
   private otpStore: Map<string, { otp: string; expiresAt: Date }> = new Map();
   private certificates: ICertificate[] = [];
 
-  async sendOTP(phone: string, email?: string): Promise<{ sent: boolean; expiresIn: number }> {
+  async sendOTP(phone: string, _email?: string): Promise<{ sent: boolean; expiresIn: number }> {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
     

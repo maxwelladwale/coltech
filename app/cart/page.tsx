@@ -2,6 +2,7 @@
 'use client';
 
 import { useCart } from '@/context/CartContext';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, Trash2, Plus, Minus, ArrowLeft } from 'lucide-react';
@@ -28,7 +29,7 @@ export default function CartPage() {
           <ShoppingCart className="w-24 h-24 mx-auto text-gray-300 mb-6" />
           <h1 className="text-3xl font-bold mb-4">Your Cart is Empty</h1>
           <p className="text-gray-600 dark:text-gray-400 mb-8">
-            Looks like you haven't added any products to your cart yet.
+            Looks like you have not added any products to your cart yet.
           </p>
           <Button asChild size="lg">
             <Link href="/products">
@@ -80,16 +81,17 @@ export default function CartPage() {
                 {/* Product Image */}
                 <div className="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded flex-shrink-0 flex items-center justify-center">
                   {item.imageUrl ? (
-                    <img 
-                      src={item.imageUrl} 
+                    <Image
+                      src={item.imageUrl}
                       alt={item.name}
-                      className="w-full h-full object-cover rounded"
+                      width={240}
+                      height={240}
+                      className="rounded"
                     />
                   ) : (
                     <ShoppingCart className="w-10 h-10 text-gray-400" />
                   )}
                 </div>
-
                 {/* Product Details */}
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between gap-4 mb-2">

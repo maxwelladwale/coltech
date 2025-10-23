@@ -69,7 +69,7 @@ export default async function OrderConfirmationPage({
               <ol className="space-y-2 text-sm text-blue-800 dark:text-blue-200">
                 <li className="flex gap-2">
                   <span className="font-bold">1.</span>
-                  <span>You'll receive an order confirmation email at <strong>{order.shippingAddress.email}</strong></span>
+                  <span>You will receive an order confirmation email at <strong>{order.shippingAddress.email}</strong></span>
                 </li>
                 <li className="flex gap-2">
                   <span className="font-bold">2.</span>
@@ -78,7 +78,7 @@ export default async function OrderConfirmationPage({
                 {order.installationDetails?.method === 'technician' && (
                   <li className="flex gap-2">
                     <span className="font-bold">3.</span>
-                    <span>We'll schedule your installation at a nearby partner garage</span>
+                    <span>We will schedule your installation at a nearby partner garage</span>
                   </li>
                 )}
                 <li className="flex gap-2">

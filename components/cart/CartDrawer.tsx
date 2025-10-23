@@ -4,7 +4,7 @@
 import { useCart } from '@/context/CartContext';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, X, Minus, Plus, Trash2 } from 'lucide-react';
+import { ShoppingCart, Minus, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -12,11 +12,13 @@ export default function CartDrawer() {
   const { cart, removeFromCart, updateCartItem } = useCart();
   const [isOpen, setIsOpen] = useState(false);
 
-  const cartTotal = cart.reduce((sum: number, item: any) => {
+  const cartTotal = cart.reduce((sum, item) => {
     return sum + (item.price * item.quantity);
   }, 0);
 
-  const cartCount = cart.reduce((sum: number, item: any) => sum + item.quantity, 0);
+  // const cartCount = cart.reduce((sum: number, item: any) => sum + item.quantity, 0);
+
+  const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
 
   const handleUpdateQuantity = (itemId: string, currentQty: number, change: number) => {
     const newQty = currentQty + change;
@@ -64,7 +66,7 @@ export default function CartDrawer() {
             {/* Cart Items */}
             <div className="flex-1 overflow-y-auto py-4">
               <div className="space-y-4">
-                {cart.map((item: any) => (
+                {cart.map((item) => (
                   <div 
                     key={item.id} 
                     className="flex gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg"

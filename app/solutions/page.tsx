@@ -81,7 +81,7 @@ export default function SolutionsPage() {
                   Advanced Driver Assistance Systems (ADAS)
                 </h3>
                 <p className="text-base leading-relaxed text-gray-600 dark:text-gray-400">
-                  ADAS employs external cameras and sensors to monitor the vehicle's environment, 
+                  ADAS employs external cameras and sensors to monitor the vehicle&apos;s environment, 
                   providing alerts for potential hazards such as lane departures, forward collisions, 
                   and pedestrian detection. These systems enhance situational awareness and assist 
                   drivers in maintaining safe driving practices.

@@ -1,16 +1,22 @@
 // components/products/ProductCard.tsx
 'use client';
 
-import { IProduct } from '@/lib/api/interfaces/types';
+import { IProduct, IMDVRProduct } from '@/lib/api/interfaces/types';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, Eye } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface ProductCardProps {
   product: IProduct;
 }
+
+// Type guard
+const isMDVR = (product: IProduct): product is IMDVRProduct => {
+  return 'channels' in product && 'includesFreeLicense' in product;
+};
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
@@ -26,7 +32,6 @@ export default function ProductCard({ product }: ProductCardProps) {
       quantity: 1
     });
 
-    // Reset after animation
     setTimeout(() => setIsAdding(false), 1000);
   };
 
@@ -36,7 +41,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <Link href={`/products/${product.id}`} className="block">
         <div className="bg-gray-200 dark:bg-gray-700 h-48 flex items-center justify-center relative overflow-hidden">
           {product.imageUrl ? (
-            <img 
+            <Image 
               src={product.imageUrl} 
               alt={product.name}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -57,7 +62,6 @@ export default function ProductCard({ product }: ProductCardProps) {
             </svg>
           )}
           
-          {/* Quick View Overlay */}
           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <Eye className="w-8 h-8 text-white" />
           </div>
@@ -89,7 +93,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </p>
 
         {/* MDVR Specific Info */}
-        {'includesFreeLicense' in product && product.includesFreeLicense && (
+        {isMDVR(product) && product.includesFreeLicense && (
           <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded p-2 mb-4">
             <p className="text-xs text-green-700 dark:text-green-300 font-semibold">
               ✓ Includes {product.licenseDurationMonths}-month free {product.licenseType.toUpperCase()} license
@@ -98,7 +102,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
 
         {/* Features (if available) */}
-        {'features' in product && product.features && product.features.length > 0 && (
+        {isMDVR(product) && product.features && product.features.length > 0 && (
           <div className="mb-4">
             <div className="flex flex-wrap gap-1">
               {product.features.slice(0, 3).map((feature, idx) => (

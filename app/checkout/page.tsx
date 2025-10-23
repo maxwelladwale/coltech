@@ -18,7 +18,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   ShoppingCart, 
-  User, 
   MapPin, 
   Wrench, 
   CreditCard, 
@@ -70,7 +69,7 @@ export default function CheckoutPage() {
   });
 
   const cartTotal = getCartTotal();
-  const cartCount = cart.length;
+  // const cartCount = cart.length;
 
   // Redirect if cart is empty
   if (cart.length === 0) {
@@ -102,13 +101,16 @@ export default function CheckoutPage() {
 
     try {
       const orderService = ServiceFactory.getOrderService();
-      
       const orderData = {
         cartId: 'cart-temp-id',
         shippingAddress: shippingInfo,
         installationDetails: installationMethod === 'technician' ? {
           method: installationMethod,
-          ...installationDetails
+          ...installationDetails,
+          // Convert date string to Date object
+          appointmentDate: installationDetails.appointmentDate 
+            ? new Date(installationDetails.appointmentDate) 
+            : undefined,
         } : {
           method: installationMethod
         },
@@ -425,7 +427,7 @@ export default function CheckoutPage() {
                             placeholder="+254 712 345 678"
                           />
                           <p className="text-sm text-gray-500 mt-2">
-                            You'll receive an M-PESA prompt to complete payment
+                            You will receive an M-PESA prompt to complete payment
                           </p>
                         </div>
                       </TabsContent>
@@ -515,7 +517,7 @@ export default function CheckoutPage() {
                 <h3 className="text-lg font-bold mb-4">Order Summary</h3>
                 
                 <div className="space-y-3 mb-4">
-                  {cart.map((item: any) => (
+                  {cart.map((item) => (
                     <div key={item.id} className="flex justify-between text-sm">
                       <span className="text-gray-600 dark:text-gray-400">
                         {item.name} × {item.quantity}

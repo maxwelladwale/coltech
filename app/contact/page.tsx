@@ -56,7 +56,7 @@ export default function ContactPage() {
               Contact Us
             </h1>
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
-              We're here to help. Reach out to us through any of the methods below, and we'll get 
+              We are here to help. Reach out to us through any of the methods below, and we will get 
               back to you as soon as possible.
             </p>
 

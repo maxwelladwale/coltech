@@ -84,7 +84,7 @@ export default function MDVRSolutionsPage() {
         {/* Hero Section */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-            COLTECH MDVRs: Driving Safety and Efficiency in Kenya's Transport Sector
+            COLTECH MDVRs: Driving Safety and Efficiency in Kenya&apos;s Transport Industry
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400">
             Addressing critical challenges in the Kenyan transport industry with state-of-the-art 
@@ -99,7 +99,7 @@ export default function MDVRSolutionsPage() {
           </h2>
           <p className="text-base leading-relaxed text-center mb-8">
             The Kenyan transport sector faces numerous challenges that impact safety, security, 
-            and operational efficiency. COLTECH's MDVR systems are specifically designed to address 
+            and operational efficiency. COLTECH&apos;s MDVR systems are specifically designed to address 
             these issues head-on.
           </p>
 
@@ -124,7 +124,7 @@ export default function MDVRSolutionsPage() {
 
             {/* Solutions */}
             <div>
-              <h3 className="text-xl font-bold mb-3">COLTECH's MDVR Solutions</h3>
+              <h3 className="text-xl font-bold mb-3">COLTECH&apos;s MDVR Solutions</h3>
               <ul className="space-y-4">
                 {solutions.map((solution, index) => (
                   <li key={index} className="flex items-start">
@@ -148,7 +148,7 @@ export default function MDVRSolutionsPage() {
             Applicability in the Kenyan Market
           </h2>
           <p className="text-base leading-relaxed">
-            Our MDVR solutions are perfectly suited for the diverse needs of Kenya's transport sector, 
+            Our MDVR solutions are perfectly suited for the diverse needs of Kenya&apos;s transport sector, 
             including Public Service Vehicles (PSVs), long-haul trucks, school buses, and corporate fleets. 
             By providing robust, reliable, and intelligent monitoring, we help transport operators comply 
             with NTSA regulations, enhance passenger safety, protect valuable assets, and optimize overall 
