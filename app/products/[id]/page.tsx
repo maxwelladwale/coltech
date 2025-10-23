@@ -254,6 +254,8 @@ export default async function ProductDetailPage({
         <div className="bg-gray-100 dark:bg-gray-800 rounded-xl p-8 flex items-center justify-center">
           {product.imageUrl ? (
             <Image
+              height={512}
+              width={512}
               src={product.imageUrl}
               alt={product.name}
               className="w-full h-96 object-contain rounded-lg"

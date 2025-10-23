@@ -41,7 +41,9 @@ export default function ProductCard({ product }: ProductCardProps) {
       <Link href={`/products/${product.id}`} className="block">
         <div className="bg-gray-200 dark:bg-gray-700 h-48 flex items-center justify-center relative overflow-hidden">
           {product.imageUrl ? (
-            <Image 
+            <Image
+              width={300}
+              height={300}
               src={product.imageUrl} 
               alt={product.name}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
