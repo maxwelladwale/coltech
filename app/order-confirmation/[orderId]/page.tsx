@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, Download, Home, Package, MapPin, Wrench } from 'lucide-react';
-
+import { IOrder } from '@/lib/api/interfaces/types';
 export default async function OrderConfirmationPage({
   params
 }: {
@@ -15,10 +15,15 @@ export default async function OrderConfirmationPage({
   
   const orderService = ServiceFactory.getOrderService();
   
-  let order;
+  let order: IOrder;
   try {
     order = await orderService.getOrderById(orderId);
     console.log("ORDER PLACED IN CONFIRMATION PAGE", orderId);
+    console.log("ORDER DETAILS", order);
+    console.log("ORDER ITEMS", order.items);
+    console.log("ORDER SHIPPING ADDRESS", order);
+    console.log("ORDER INSTALLATION DETAILS", order.installationDetails);
+    console.log("ORDER PAYMENT METHOD", order.paymentMethod);
   } catch {
     notFound();
   }
@@ -30,7 +35,6 @@ export default async function OrderConfirmationPage({
       day: 'numeric'
     });
   };
-
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

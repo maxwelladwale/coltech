@@ -19,9 +19,16 @@ import {
   MockInstallationService,
 } from './implementations/mock/MockServices';
 
+// Laravel Services
+import { LaravelProductService } from './implementations/laravel/LaravelProductService';
+import { LaravelOrderService } from './implementations/laravel/LaravelOrderService';
+import { LaravelGarageService } from './implementations/laravel/LaravelGarageService';
+import { LaravelLicenseService } from './implementations/laravel/LaravelLicenseService';
+import { LaravelCertificateService } from './implementations/laravel/LaravelCertificateService';
+
 import { MockPaymentService, IPaymentService } from './implementations/mock/MockPaymentService';
 
-type BackendType = 'mock' | 'odoo';
+type BackendType = 'mock' | 'odoo' | 'laravel';
 
 class ServiceFactoryImpl implements IServiceFactory {
   private static instance: ServiceFactoryImpl;
@@ -41,6 +48,8 @@ class ServiceFactoryImpl implements IServiceFactory {
 
   public getProductService(): IProductService {
     switch (this.backend) {
+      case 'laravel':
+        return new LaravelProductService();
       case 'odoo':
         // return new OdooProductService(); // When you implement Odoo
         throw new Error('Odoo backend not yet implemented');
@@ -63,6 +72,8 @@ class ServiceFactoryImpl implements IServiceFactory {
   public getOrderService(): IOrderService {
     console.log("ORDER SERVICE", this.backend);
     switch (this.backend) {
+      case 'laravel':
+        return new LaravelOrderService();
       case 'odoo':
         throw new Error('Odoo backend not yet implemented');
       case 'mock':
@@ -73,6 +84,8 @@ class ServiceFactoryImpl implements IServiceFactory {
 
   public getLicenseService(): ILicenseService {
     switch (this.backend) {
+      case 'laravel':
+        return new LaravelLicenseService();
       case 'odoo':
         throw new Error('Odoo backend not yet implemented');
       case 'mock':
@@ -83,6 +96,8 @@ class ServiceFactoryImpl implements IServiceFactory {
 
   public getCertificateService(): ICertificateService {
     switch (this.backend) {
+      case 'laravel':
+        return new LaravelCertificateService();
       case 'odoo':
         throw new Error('Odoo backend not yet implemented');
       case 'mock':
@@ -93,6 +108,8 @@ class ServiceFactoryImpl implements IServiceFactory {
 
   public getInstallationService(): IInstallationService {
     switch (this.backend) {
+      case 'laravel':
+        return new LaravelGarageService();
       case 'odoo':
         throw new Error('Odoo backend not yet implemented');
       case 'mock':
