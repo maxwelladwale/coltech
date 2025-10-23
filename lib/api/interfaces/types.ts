@@ -14,8 +14,9 @@ export type LicenseType = 'ai' | 'non-ai';
 export type InstallationMethod = 'self' | 'technician';
 
 export interface IProduct {
-  id: string;
+  id: string | number;
   name: string;
+  sku: string;
   category: ProductCategory;
   description: string;
   shortDescription?: string;
@@ -23,7 +24,7 @@ export interface IProduct {
   imageUrl?: string;
   videoUrl?: string;
   specifications?: Record<string, string | number | boolean>;
-  inStock: boolean;
+  in_stock: boolean;
   stockQuantity?: number;
 }
 
@@ -232,7 +233,7 @@ export interface IProductService {
     inStock?: boolean;
   }): Promise<IProduct[]>;
   
-  getProductById(id: string): Promise<IProduct>;
+  getProductById(id: string | number | BigInt): Promise<IProduct>;
   
   getRecommendedPackages(): Promise<IPackage[]>;
   

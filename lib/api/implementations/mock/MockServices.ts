@@ -18,10 +18,11 @@ export const mockMDVRs: IMDVRProduct[] = [
     id: 'mdvr-1',
     name: 'MDVR 4-Channel AI Pro',
     category: 'mdvr',
+    sku: 'MDVR4AIPro',
     description: 'Professional 4-channel MDVR with advanced AI features including ADAS, DMS, and real-time driver behavior monitoring. Perfect for fleet management.',
     shortDescription: 'AI-powered 4-channel MDVR with ADAS & DMS',
-    price: 45000,
-    inStock: true,
+    price: 49000,
+    in_stock: true,
     stockQuantity: 15,
     imageUrl: '/images/mdvr-4ch-ai.avif',
     includesFreeLicense: true,
@@ -49,10 +50,11 @@ export const mockMDVRs: IMDVRProduct[] = [
     id: 'mdvr-2',
     name: 'MDVR 8-Channel AI Elite',
     category: 'mdvr',
+    sku: 'MDVR8AIElite',
     description: 'Enterprise-grade 8-channel MDVR system with full AI suite. Supports up to 8 cameras with advanced analytics and cloud integration.',
     shortDescription: 'Premium 8-channel MDVR for large vehicles',
     price: 75000,
-    inStock: true,
+    in_stock: true,
     stockQuantity: 8,
     imageUrl: '/images/mdvr-8ch-ai.webp',
     includesFreeLicense: true,
@@ -82,10 +84,11 @@ export const mockMDVRs: IMDVRProduct[] = [
     id: 'mdvr-3',
     name: 'MDVR 4-Channel Standard',
     category: 'mdvr',
+    sku: 'MDVR4Standard',
     description: 'Reliable 4-channel MDVR for basic fleet monitoring. No AI features, but includes GPS tracking and HD recording.',
     shortDescription: 'Affordable 4-channel MDVR without AI',
     price: 28000,
-    inStock: true,
+    in_stock: true,
     stockQuantity: 25,
     imageUrl: '/images/mdvr-4ch-ai.avif',
     includesFreeLicense: true,
@@ -114,10 +117,11 @@ export const mockCameras: ICamera[] = [
     id: 'cam-1',
     name: 'HD Front Camera 1080P',
     category: 'camera',
+    sku: 'CAM-1080P',
     description: 'High-definition front-facing camera with night vision and wide-angle lens. Perfect for road monitoring.',
     shortDescription: 'Full HD front camera with night vision',
     price: 5000,
-    inStock: true,
+    in_stock: true,
     stockQuantity: 50,
     imageUrl: '/images/camera-front.jpg',
     channels: 1,
@@ -139,10 +143,11 @@ export const mockCameras: ICamera[] = [
     id: 'cam-2',
     name: 'Interior Cabin Camera',
     category: 'camera',
+    sku: 'CAM-CABIN',
     description: 'Interior camera for driver and passenger monitoring. Features infrared night vision and audio recording.',
     shortDescription: 'Cabin monitoring camera with audio',
     price: 6500,
-    inStock: true,
+    in_stock: true,
     stockQuantity: 40,
     imageUrl: '/images/camera-interior.webp',
     channels: 1,
@@ -164,10 +169,11 @@ export const mockCameras: ICamera[] = [
     id: 'cam-3',
     name: 'Side/Rear Camera Kit',
     category: 'camera',
+    sku: 'CAM-SIDE-REAR',
     description: 'Dual camera kit for side and rear monitoring. Waterproof and shock-resistant design.',
     shortDescription: 'Side & rear monitoring camera set',
     price: 8000,
-    inStock: true,
+    in_stock: true,
     stockQuantity: 30,
     imageUrl: '/images/camera-interior.webp',
     channels: 2,
@@ -192,10 +198,11 @@ export const mockAccessories: IProduct[] = [
     id: 'acc-1',
     name: 'Extension Cable 10M',
     category: 'cable',
+    sku: 'CABLE-10M',
     description: '10-meter extension cable for camera connections',
     price: 1500,
     imageUrl: '/images/cable-10m.jpg',
-    inStock: true,
+    in_stock: true,
     stockQuantity: 100
   },
   {
@@ -203,29 +210,32 @@ export const mockAccessories: IProduct[] = [
     name: 'Hard Disk 2TB',
     imageUrl: '/images/hdd-2tb.jpg',
     category: 'accessory',
+    sku: 'HDD-2TB',
     description: '2TB enterprise-grade hard disk for MDVR storage',
     price: 8500,
-    inStock: true,
+    in_stock: true,
     stockQuantity: 20
   },
   {
     id: 'acc-3',
     name: 'GPS Antenna',
+    sku: 'GPS-ANT',
     category: 'accessory',
     imageUrl: '/images/gps-antenna.webp',
     description: 'External GPS antenna for improved signal reception',
     price: 2000,
-    inStock: true,
+    in_stock: true,
     stockQuantity: 50
   },
   {
     id: 'acc-4',
     name: 'SD Card 128GB',
+    sku: 'SD-CARD-128GB',
     imageUrl: '/images/sd-card-128gb.webp',
     category: 'accessory',
     description: 'High-speed 128GB SD card for continuous recording',
     price: 3500,
-    inStock: true,
+    in_stock: true,
     stockQuantity: 75
   }
 ];
@@ -244,7 +254,7 @@ export class MockProductService implements IProductService {
   async getProducts(filters?: {
     category?: string;
     search?: string;
-    inStock?: boolean;
+    in_stock?: boolean;
   }): Promise<IProduct[]> {
     let products = [...mockProducts];
     
@@ -260,8 +270,8 @@ export class MockProductService implements IProductService {
       );
     }
     
-    if (filters?.inStock !== undefined) {
-      products = products.filter(p => p.inStock === filters.inStock);
+    if (filters?.in_stock !== undefined) {
+      products = products.filter(p => p.in_stock === filters.in_stock);
     }
     
     return products;
@@ -290,7 +300,7 @@ export class MockProductService implements IProductService {
   async checkStock(productId: string): Promise<{ available: boolean; quantity: number }> {
     const product = await this.getProductById(productId);
     return { 
-      available: product.inStock, 
+      available: product.in_stock, 
       quantity: product.stockQuantity || 0 
     };
   }

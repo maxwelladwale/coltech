@@ -89,7 +89,7 @@ export default async function ProductsPage() {
             <h2 className="text-3xl font-bold mb-6">MDVRs</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {mdvrs.map((mdvr) => (
-                <ProductCard key={mdvr.id} product={mdvr} />
+                <ProductCard key={mdvr.sku} product={mdvr} />
               ))}
             </div>
           </section>

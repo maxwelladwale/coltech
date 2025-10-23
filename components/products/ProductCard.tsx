@@ -21,6 +21,7 @@ const isMDVR = (product: IProduct): product is IMDVRProduct => {
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const [isAdding, setIsAdding] = useState(false);
+  console.log("PRODUCT IN CARD", product.in_stock);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -126,7 +127,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Stock Status */}
         <div className="mb-4">
-          {product.inStock ? (
+          {product.in_stock ? (
             <div className="flex items-center gap-2 text-green-600 text-sm">
               <div className="w-2 h-2 bg-green-600 rounded-full"></div>
               <span>In Stock</span>
@@ -160,7 +161,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           
           <Button
             onClick={handleAddToCart}
-            disabled={!product.inStock || isAdding}
+            disabled={!product.in_stock || isAdding}
             className="flex-1"
             size="sm"
           >
