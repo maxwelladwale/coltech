@@ -6,6 +6,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { CartProvider } from "@/context/CartContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 // Use Inter font (better for your design)
 const inter = Inter({
@@ -24,19 +25,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <CartProvider>
-
     <html lang="en" className={inter.className}>
       <body className="antialiased">
-        <div className="flex flex-col min-h-screen">
-          <Header />                        
-          <main className="flex-grow">
-            {children}                    
-          </main>
-          <Footer />
-        </div>
+        <AuthProvider>
+          <CartProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-grow">
+                {children}
+              </main>
+              <Footer />
+            </div>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
-    </CartProvider>
   );
 }

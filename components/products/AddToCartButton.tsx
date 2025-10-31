@@ -32,7 +32,7 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
     }, 2000);
   };
 
-  if (!product.inStock) {
+  if (!product.in_stock) {
     return (
       <Button 
         disabled 
