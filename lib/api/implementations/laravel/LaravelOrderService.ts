@@ -17,45 +17,54 @@ export class LaravelOrderService implements IOrderService {
 
 
   async createOrder(data: {
-    userId?: string;
-    cartId: string;
-    shippingAddress: IShippingAddress;
-    installationDetails?: IInstallationDetails;
-    paymentMethod: string;
-  }): Promise<IOrder> {
-    // Get cart items from localStorage
-    const cartData = localStorage.getItem('coltech_cart');
-    const cart = cartData ? JSON.parse(cartData) : [];
+  userId?: string;
+  cartId: string;
+  shippingAddress: IShippingAddress;
+  installationDetails?: IInstallationDetails;
+  paymentMethod: string;
+}): Promise<IOrder> {
+  // Get cart items from localStorage
+  const cartData = localStorage.getItem('coltech_cart');
+  const cart = cartData ? JSON.parse(cartData) : [];
 
-    const cartItems = cart.map((item: any) => ({
-      productId: item.id,
-      quantity: item.quantity
-    }));
+  
+  // Get auth token from localStorage
+  const authToken = localStorage.getItem('auth_token');
+  
+  const cartItems = cart.map((item: any) => ({
+    productId: item.id,
+    quantity: item.quantity
+  }));
 
-    const response = await fetch(`${this.baseUrl}/orders`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        // Add auth token if available
-        ...(data.userId && { 'Authorization': `Bearer ${localStorage.getItem('auth_token')}` })
-      },
-      body: JSON.stringify({
-        cartItems,
-        shippingAddress: data.shippingAddress,
-        installationDetails: data.installationDetails,
-        paymentMethod: data.paymentMethod
-      })
-    });
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  };
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || 'Failed to create order');
-    }
-
-    const responseData = await response.json();
-    return this.transformOrderResponse(responseData);
+  // Add Authorization header if token exists
+  if (authToken) {
+    headers['Authorization'] = `Bearer ${authToken}`;
   }
 
+  const response = await fetch(`${this.baseUrl}/orders`, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify({
+      cartItems,
+      shippingAddress: data.shippingAddress,
+      installationDetails: data.installationDetails,
+      paymentMethod: data.paymentMethod
+    })
+  });
+  
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Failed to create order');
+  }
+
+  const responseData = await response.json();
+  return this.transformOrderResponse(responseData);
+}
   async getOrderById(orderId: string): Promise<IOrder> {
     const response = await fetch(`${this.baseUrl}/orders/${orderId}`);
     console.log("GET ORDER RESPONSE", orderId, response);
@@ -69,7 +78,7 @@ export class LaravelOrderService implements IOrderService {
     return {
       id: String(data.id),
       orderNumber: data.order_number,
-      userId: data.user_id ? String(data.user_id) : undefined,
+      userId: data.user_id ? Number(data.user_id) : undefined,
       items: data.items.map((item: any) => ({
         productId: String(item.product_id),
         productName: item.product_name,

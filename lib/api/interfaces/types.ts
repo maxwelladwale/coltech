@@ -114,7 +114,7 @@ export type OrderStatus = 'pending' | 'confirmed' | 'processing' | 'shipped' | '
 export interface IOrder {
   id: string;
   orderNumber: string;
-  userId?: string;
+  userId?: number;
   items: Array<{
     productId: string;
     productName: string;

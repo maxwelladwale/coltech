@@ -1,12 +1,20 @@
-// components/layout/Header.tsx - UPDATED WITH CART
+// components/layout/Header.tsx - UPDATED WITH CART AND AUTH
 "use client";
 
 import Link from "next/link";
 import { useState } from "react";
 import CartDrawer from "@/components/cart/CartDrawer";
+import { useAuth } from "@/contexts/AuthContext";
+import { User, LogOut } from "lucide-react";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isAuthenticated, user, logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    setMobileMenuOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-border-light dark:border-border-dark">
@@ -65,10 +73,56 @@ export default function Header() {
             {/* Cart Drawer */}
             <CartDrawer />
 
+            {/* Auth Actions */}
+            {isAuthenticated ? (
+              <div className="hidden md:flex items-center gap-2">
+                <div className="relative group">
+                  <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <User className="w-4 h-4" />
+                    <span className="text-sm font-medium">{user?.fullName?.split(' ')[0]}</span>
+                  </button>
+                  {/* Dropdown */}
+                  <div className="absolute right-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white dark:bg-card-dark border border-border-light dark:border-border-dark rounded-lg shadow-lg py-2">
+                    <Link href="/profile" className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-background-dark">
+                      My Profile
+                    </Link>
+                    <Link href="/orders" className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-background-dark">
+                      My Orders
+                    </Link>
+                    <Link href="/licenses" className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-background-dark">
+                      My Licenses
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-background-dark flex items-center gap-2"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="hidden sm:flex text-sm font-medium hover:text-primary transition-colors items-center px-3 py-2"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="hidden sm:flex bg-primary text-white text-sm font-bold h-10 px-4 rounded-lg hover:bg-primary/90 transition-colors items-center"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+
             {/* Contact Button */}
             <Link
               href="/contact"
-              className="hidden sm:flex bg-primary text-white text-sm font-bold h-10 px-4 rounded-lg hover:bg-primary/90 transition-colors items-center"
+              className="hidden lg:flex bg-primary text-white text-sm font-bold h-10 px-4 rounded-lg hover:bg-primary/90 transition-colors items-center"
             >
               Contact Us
             </Link>
@@ -93,34 +147,91 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border-light dark:border-border-dark">
             <div className="flex flex-col gap-4">
-              <Link 
-                href="/products" 
+              <Link
+                href="/products"
                 className="text-sm font-medium hover:text-primary"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Products
               </Link>
-              <Link 
-                href="/solutions" 
+              <Link
+                href="/solutions"
                 className="text-sm font-medium hover:text-primary"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Solutions
               </Link>
-              <Link 
-                href="/about" 
+              <Link
+                href="/about"
                 className="text-sm font-medium hover:text-primary"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Company
               </Link>
-              <Link 
-                href="/contact" 
+              <Link
+                href="/contact"
                 className="text-sm font-medium hover:text-primary"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Contact Us
               </Link>
+
+              {/* Mobile Auth Actions */}
+              <div className="border-t border-border-light dark:border-border-dark pt-4 mt-2">
+                {isAuthenticated ? (
+                  <>
+                    <div className="mb-3 px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Signed in as</p>
+                      <p className="text-sm font-medium">{user?.fullName}</p>
+                    </div>
+                    <Link
+                      href="/profile"
+                      className="block text-sm font-medium hover:text-primary py-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      My Profile
+                    </Link>
+                    <Link
+                      href="/orders"
+                      className="block text-sm font-medium hover:text-primary py-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      My Orders
+                    </Link>
+                    <Link
+                      href="/licenses"
+                      className="block text-sm font-medium hover:text-primary py-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      My Licenses
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left text-sm font-medium text-red-600 py-2 flex items-center gap-2"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/login"
+                      className="block text-sm font-medium hover:text-primary py-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="block text-sm font-medium text-white bg-primary px-4 py-2 rounded-lg hover:bg-primary/90 mt-2 text-center"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         )}

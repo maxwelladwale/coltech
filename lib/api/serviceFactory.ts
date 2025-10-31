@@ -7,6 +7,7 @@ import type {
   ILicenseService,
   ICertificateService,
   IInstallationService,
+  IAuthService,
   IServiceFactory,
 } from './interfaces/types';
 
@@ -25,6 +26,7 @@ import { LaravelOrderService } from './implementations/laravel/LaravelOrderServi
 import { LaravelGarageService } from './implementations/laravel/LaravelGarageService';
 import { LaravelLicenseService } from './implementations/laravel/LaravelLicenseService';
 import { LaravelCertificateService } from './implementations/laravel/LaravelCertificateService';
+import { LaravelAuthService } from './implementations/laravel/LaravelAuthService';
 
 import { MockPaymentService, IPaymentService } from './implementations/mock/MockPaymentService';
 
@@ -118,9 +120,16 @@ class ServiceFactoryImpl implements IServiceFactory {
     }
   }
 
-  // Placeholder services (not yet implemented)
-  public getAuthService(): any { 
-    throw new Error('AuthService not yet implemented'); 
+  public getAuthService(): IAuthService {
+    switch (this.backend) {
+      case 'laravel':
+        return new LaravelAuthService();
+      case 'odoo':
+        throw new Error('Odoo backend not yet implemented');
+      case 'mock':
+      default:
+        throw new Error('Mock auth service not yet implemented');
+    }
   }
   
   public getBlogService(): any { 
