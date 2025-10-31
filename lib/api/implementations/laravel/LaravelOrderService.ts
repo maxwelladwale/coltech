@@ -78,7 +78,7 @@ export class LaravelOrderService implements IOrderService {
     return {
       id: String(data.id),
       orderNumber: data.order_number,
-      userId: data.user_id ? Number(data.user_id) : undefined,
+      userId: data.user_id ? String(data.user_id) : undefined,
       items: data.items.map((item: any) => ({
         productId: String(item.product_id),
         productName: item.product_name,
