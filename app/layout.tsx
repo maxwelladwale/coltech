@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import EmailVerificationBanner from "@/components/auth/EmailVerificationBanner";
 import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 
@@ -31,6 +32,7 @@ export default function RootLayout({
           <CartProvider>
             <div className="flex flex-col min-h-screen">
               <Header />
+              <EmailVerificationBanner />
               <main className="flex-grow">
                 {children}
               </main>

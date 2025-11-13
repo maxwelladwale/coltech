@@ -206,6 +206,8 @@ export interface IUser {
   email: string;
   phone: string;
   fullName: string;
+  role?: string; // 'customer' | 'admin' | 'sales' | 'support'
+  emailVerifiedAt?: Date | null; // null if not verified
   createdAt: Date;
 }
 
@@ -355,20 +357,23 @@ export interface ICertificateService {
 export interface IAuthService {
   // Authentication
   login(email: string, password: string): Promise<{ user: IUser; token: string }>;
-  
+
   register(data: {
     email: string;
     password: string;
     fullName: string;
     phone: string;
   }): Promise<{ user: IUser; token: string }>;
-  
+
   logout(token: string): Promise<void>;
-  
+
   // Session management
   getCurrentUser(token: string): Promise<IUser>;
-  
+
   resetPassword(email: string): Promise<{ sent: boolean }>;
+
+  // Email verification
+  resendVerification(token: string): Promise<{ message: string }>;
 }
 
 export interface IBlogService {

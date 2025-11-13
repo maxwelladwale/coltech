@@ -131,12 +131,31 @@ export class LaravelAuthService implements IAuthService {
     return { sent: true };
   }
 
+  async resendVerification(token: string): Promise<{ message: string }> {
+    const response = await fetch(`${this.baseUrl}/auth/resend-verification`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to resend verification email');
+    }
+
+    const data = await response.json();
+    return { message: data.message };
+  }
+
   private transformUser(data: any): IUser {
     return {
       id: String(data.id),
       email: data.email,
       phone: data.phone,
       fullName: data.full_name,
+      role: data.role,
+      emailVerifiedAt: data.email_verified_at ? new Date(data.email_verified_at) : null,
       createdAt: new Date(data.created_at)
     };
   }
