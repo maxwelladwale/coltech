@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { XCircle, Mail } from 'lucide-react';
+import { ServiceFactory } from '@/lib/api/serviceFactory';
 
 export default function VerificationFailedPage() {
   const router = useRouter();
@@ -36,7 +37,7 @@ export default function VerificationFailedPage() {
     setResendError('');
 
     try {
-      const authService = (await import('@/lib/api/serviceFactory')).getAuthService();
+      const authService = await ServiceFactory.getAuthService();
       await authService.resendVerification(token);
       setResendSuccess(true);
     } catch (error) {
