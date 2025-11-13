@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { XCircle, Mail } from 'lucide-react';
+import { ServiceFactory } from '@/lib/api/serviceFactory';
 
-export default function VerificationFailedPage() {
+function VerificationFailedContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user, token } = useAuth();
@@ -36,7 +37,7 @@ export default function VerificationFailedPage() {
     setResendError('');
 
     try {
-      const authService = (await import('@/lib/api/serviceFactory')).getAuthService();
+      const authService = await ServiceFactory.getAuthService();
       await authService.resendVerification(token);
       setResendSuccess(true);
     } catch (error) {
@@ -125,5 +126,20 @@ export default function VerificationFailedPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function VerificationFailedPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0066CC] mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <VerificationFailedContent />
+    </Suspense>
   );
 }
