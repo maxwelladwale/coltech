@@ -9,6 +9,7 @@ interface AuthContextType {
   token: string | null;
   isLoading: boolean;
   isAuthenticated: boolean;
+  isEmailVerified: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (data: {
     email: string;
@@ -18,6 +19,7 @@ interface AuthContextType {
   }) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
+  resendVerification: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -119,15 +121,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const resendVerification = async () => {
+    if (!token) {
+      throw new Error('No authentication token available');
+    }
+
+    try {
+      await authService.resendVerification(token);
+    } catch (error) {
+      console.error('Failed to resend verification:', error);
+      throw error;
+    }
+  };
+
   const value: AuthContextType = {
     user,
     token,
     isLoading,
     isAuthenticated: !!user && !!token,
+    isEmailVerified: !!user?.emailVerifiedAt,
     login,
     register,
     logout,
     refreshUser,
+    resendVerification,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
